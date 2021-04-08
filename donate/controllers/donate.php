@@ -81,8 +81,15 @@ class Donate extends MX_Controller {
         curl_close($ch);
 
         if ($result['data']['code'] == 100) {
-            @Header('Location: https://www.zarinpal.com/pg/StartPay/' . $result['data']["authority"]);
-            exit;
+            echo' <html><body>
+                    <script type="text/javascript" src="https://cdn.zarinpal.com/zarinak/v1/checkout.js"></script>
+                    <script type="text/javascript">
+                    window.onload = function () {
+                    Zarinak.setAuthority("' . $result['data']['authority'] . '");
+                    Zarinak.showQR();
+                    Zarinak.open();
+                     };
+                    </script></body></html>';
         } else {
             echo'ERR: ' . $result['errors']['code'];
             exit;
